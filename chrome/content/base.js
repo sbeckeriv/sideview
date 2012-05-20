@@ -1,25 +1,24 @@
 var Contacts = {
     selected_email: function (contacts) {
-        alert(contacts)
+        viewModel.clearPeople();
+        jQuery.each(contacts, function(index, value) { 
+            var p = new Person(value.name,value.email);
+            viewModel.addPerson(p);
+        });
         // body...
     }
 };
-var Person = function(name, children) {
+var Person = function(name, email) {
     this.name = name;
-    this.children = ko.observableArray(children);
-    this.addChild = function() {
-        this.children.push("New child");
-    }.bind(this);
+    this.email= email;
 }
-// The view model is an abstract description of the state of the UI, but without any knowledge of the UI technology (HTML)
+
 var viewModel = {
-    people: [
-        new Person("Annabelle", ["Arnie", "Anders", "Apple"]),
-        new Person("Bertie", ["Boutros-Boutros", "Brianna", "Barbie", "Bee-bop"]),
-        new Person("Charles", ["Cayenne", "Cleopatra"])
-        ],
-    showRenderTimes: ko.observable(false)
+    people: ko.observableArray(),
+    showRenderTimes: ko.observable(false),
+    addPerson: function(person) {this.people.push(person)},
+    clearPeople: function(){this.people.remove(function(item) { return true })}
 };
- 
+
 ko.applyBindings(viewModel);
 
