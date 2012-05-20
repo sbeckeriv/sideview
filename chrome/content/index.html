@@ -7,17 +7,16 @@
         <script type="text/javascript" src="chrome://sideview/content/knockout.js"></script>
     </head>
     <body>
-        <h2>People</h2>
         <ul data-bind="foreach: people" class="unstyled">
             <li>
-            <div class="row">
-                <div class="span1" style="float:left;width:50px">
-                    <img data-bind="attr: {src:mug_url()}" width="50" />
+            <div class="row contact">
+                <div class="span1 mug"> 
+                    <img class="mug_img" data-bind="attr: {src:mug_url()}" />
                 </div>
-                <div class="span9"  style="background-color:white">
+                <div class="span9">
                     <ul class="unstyled">
                         <li data-bind="text: name"></li> 
-                        <li data-bind="text: email"></li>
+                        <li><a data-bind="attr: {href:'mailto:'+email},text:email"></a></li>
                     </ul>
                 </div>
             </div>

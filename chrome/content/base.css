@@ -1,3 +1,22 @@
 body{
-    background-color: red;
+    background-color: gray;
+    margin: 0px;
+    padding: 0px;
 }
+
+.mug{
+    float:left;
+    width:31px;
+}
+
+.mug_img{
+    width:30px
+}
+.contact{
+    margin-bottom: 2px;
+    border-bottom:thin solid white;
+}
+a:link {color:black;}      /* unvisited link */
+a:visited {color:black;}  /* visited link */
+a:hover {color:black;}  /* mouse over link */
+a:active {color:black;}  /* selected link */ 

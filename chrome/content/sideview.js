@@ -14,7 +14,7 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
             if(doc.getElementById('sideviewContent')){ return true; }
             var v = doc.createElement("vbox");
             var height = doc.getElementById("messengerBox").clientHeight;
-            v.setAttribute("width","250")
+            v.setAttribute("width","150")
             v.setAttribute("id","sideviewContent");
             v.setAttribute("class","chomeclass-extrachrome");
             v.setAttribute("height",height);
