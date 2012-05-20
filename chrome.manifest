@@ -1,0 +1,5 @@
+content   sideview                 chrome/content/
+skin      sideview   classic/1.0   chrome/skin/
+locale    sideview   en-US         chrome/locale/en-US/
+overlay	chrome://messenger/content/messenger.xul	chrome://sideview/content/ff-overlay.xul
+

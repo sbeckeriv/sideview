@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="chrome://sideview/content/base.css" />
+
+        <script type="text/javascript" src="chrome://sideview/content/jquery.js"></script>
+        <script type="text/javascript" src="chrome://sideview/content/knockout.js"></script>
+    </head>
+    <body>
+    <h2>People</h2>
+    <ul data-bind="foreach: people">
+        <li>
+            <div>
+                <span data-bind="text: name"> </span> has <span data-bind='text: children().length'>&nbsp;</span> children:
+                <a href='#' data-bind='click: addChild '>Add child</a>
+                <span class='renderTime' data-bind='visible: $root.showRenderTimes'>
+                    (person rendered at <span data-bind='text: new Date().getSeconds()' > </span>)
+                </span>
+            </div>
+            <ul data-bind="foreach: children">
+                <li>
+                    <span data-bind="text: $data"> </span>
+                    <span class='renderTime' data-bind='visible: $root.showRenderTimes'>
+                        (child rendered at <span data-bind='text: new Date().getSeconds()' > </span>)
+                    </span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+        <script type="text/javascript" src="chrome://sideview/content/base.js"></script>
+</body>
+</html>
