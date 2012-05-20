@@ -1,19 +1,28 @@
 <!DOCTYPE html>
+<html lang="en">
     <head>
+        <link rel="stylesheet" type="text/css" href="chrome://sideview/content/bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="chrome://sideview/content/base.css" />
-
         <script type="text/javascript" src="chrome://sideview/content/jquery.js"></script>
         <script type="text/javascript" src="chrome://sideview/content/knockout.js"></script>
     </head>
     <body>
-    <h2>People</h2>
-    <ul data-bind="foreach: people">
-        <li>
-            <div>
-                <span data-bind="text: name">
+        <h2>People</h2>
+        <ul data-bind="foreach: people" class="unstyled">
+            <li>
+            <div class="row">
+                <div class="span1" style="float:left;width:50px">
+                    <img data-bind="attr: {src:mug_url()}" width="50" />
+                </div>
+                <div class="span9"  style="background-color:white">
+                    <ul class="unstyled">
+                        <li data-bind="text: name"></li> 
+                        <li data-bind="text: email"></li>
+                    </ul>
+                </div>
             </div>
-        </li>
-    </ul>
-    <script type="text/javascript" src="chrome://sideview/content/base.js"></script>
-</body>
+            </li>
+        </ul>
+        <script type="text/javascript" src="chrome://sideview/content/base.js"></script>
+    </body>
 </html>

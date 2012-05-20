@@ -14,7 +14,7 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
             if(doc.getElementById('sideviewContent')){ return true; }
             var v = doc.createElement("vbox");
             var height = doc.getElementById("messengerBox").clientHeight;
-            v.setAttribute("width","100")
+            v.setAttribute("width","250")
             v.setAttribute("id","sideviewContent");
             v.setAttribute("class","chomeclass-extrachrome");
             v.setAttribute("height",height);
@@ -31,6 +31,10 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
             box.setAttribute("style","height:"+height+"px;")
             box.setAttribute("src","chrome://sideview/content/index.html")
             box.addEventListener("load",window.sideview.onLoad,true)
+            var r = doc.createElement("resizer")
+            r.setAttribute("dir","topleft")
+            r.setAttribute("height","2")
+            r.setAttribute("style","cursor: nw-resize;")
             v.appendChild(box);
             this.sandbox = null;
             doc.getElementById('messengerBox').appendChild(v) 
@@ -70,20 +74,35 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
         };  
 
         this.onEmailSelect = function(){
+            var messages = []
+            var seen = {};
             var message = gMessageDisplay.displayedMessage;
             if (!message) {
-                return false;
-            }
+                var selected = gFolderDisplay.selectedMessages;
+                if(!selected || selected.length<1){
+                    return false 
+                }
+                messages = messages.concat(selected);
+            }else{ messages.push(message);}
             var contacts = [];
             var emails = [];
-            emails = emails.concat(message.author.split(","),message.recipients.split(","),message.ccList.split(","),message.bccList.split(','));
+            jQuery.each(messages,function(index,message){
+                emails = emails.concat(message.author.split(","),message.recipients.split(","),message.ccList.split(","),message.bccList.split(','));
+            });
             for (var i = 0; i < emails.length; i++) {
                 if (emails[i].length > 0) {
                     var email_parts = emails[i].split(/<|>/);
                     if (email_parts.length > 1) {
-                        contacts.push({ email_addresses: [email_parts[1]], name: email_parts[0] })
+                        if(!seen[email_parts[1]+email_parts[0]]){
+                            contacts.push({ email: [email_parts[1]], name: email_parts[0] })
+                            seen[email_parts[1]+email_parts[0]]=true;
+                        }
                     } else {
-                        contacts.push({ email_addresses: [email_parts[0]] })
+                        if(!seen[email_parts[0]]){
+                            contacts.push({ email: [email_parts[0]] })
+
+                            seen[email_parts[0]]=true;
+                        }
                     }
                 }
             }
