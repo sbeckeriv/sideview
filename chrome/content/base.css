@@ -7,6 +7,7 @@ body{
 .mug{
     float:left;
     width:31px;
+    height:100%;
 }
 
 .mug_img{
@@ -20,3 +21,21 @@ a:link {color:black;}      /* unvisited link */
 a:visited {color:black;}  /* visited link */
 a:hover {color:black;}  /* mouse over link */
 a:active {color:black;}  /* selected link */ 
+.title{
+    height:18px;
+    width: 100%;
+    background-color: blue;
+}
+.shrink,.expand{
+    color: black;
+    float:right
+}
+.small,.large{
+
+}
+.small .details{
+    display:none
+}
+.large .details{
+    display: block
+}

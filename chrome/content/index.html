@@ -7,13 +7,17 @@
         <script type="text/javascript" src="chrome://sideview/content/knockout.js"></script>
     </head>
     <body>
+        <div class="title">
+            <a class="expand" onClick="expand()"> &lt;&lt; </a>
+            <a class="shrink" onClick="shrink()">&gt;&gt;  </a>
+        </div>
         <ul data-bind="foreach: people" class="unstyled">
             <li>
             <div class="row contact">
                 <div class="span1 mug"> 
                     <img class="mug_img" data-bind="attr: {src:mug_url()}" />
                 </div>
-                <div class="span9">
+                <div class="span9 details">
                     <ul class="unstyled">
                         <li data-bind="text: name"></li> 
                         <li><a data-bind="attr: {href:'mailto:'+email},text:email"></a></li>
@@ -23,5 +27,8 @@
             </li>
         </ul>
         <script type="text/javascript" src="chrome://sideview/content/base.js"></script>
+        <div id="transport" style="display:none">
+
+        </div>
     </body>
 </html>

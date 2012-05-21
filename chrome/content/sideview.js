@@ -4,6 +4,8 @@ window.addEventListener("load", function(event) { (function(loader) {
 Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
     Components.interfaces.mozIJSSubScriptLoader));
     var Sideview = function(){
+        this.min_width = 31;
+        this.max_width = 150;
         this.sandbox = null;
         //todo: cache?
         this.mainwindow = function () {
@@ -14,14 +16,12 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
             if(doc.getElementById('sideviewContent')){ return true; }
             var v = doc.createElement("vbox");
             var height = doc.getElementById("messengerBox").clientHeight;
-            v.setAttribute("width","150")
+            v.setAttribute("width",this.max_width)
             v.setAttribute("id","sideviewContent");
             v.setAttribute("class","chomeclass-extrachrome");
             v.setAttribute("height",height);
             v.setAttribute("style","height:"+height+"px;")
             var box = doc.createElement('browser');
-            box.setAttribute("id","sideviewBody");
-            box.setAttribute("width","60")
             box.setAttribute("id","sideviewBody");
             box.setAttribute("class","chomeclass-extrachrome");
             box.setAttribute("height",height);
@@ -49,7 +49,7 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
                     //build sandbox and set the window back.
                     this.sandbox = Components.utils.Sandbox(view);
                     this.sandbox.window = view;
-                    //view.document.addEventListener("Plugin.callback",window.sideview.pluginCallback,true);
+                    view.document.addEventListener("Plugin.callback",window.sideview.pluginCallback,true);
                 }
             }catch(e){alert("setSandbox"+e)}
         };
@@ -122,7 +122,25 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
             }catch(e){alert(e); window.sideview.log("sendcontacts:"+e)} 
         };
         this.pluginCallback = function(e){
-            alert(e)
+            try{
+                var event = $(e.target).find("#eventname").text();
+                var data = $(e.target).find("#eventdata").text();
+                window.sideview.log("pluginCallback:"+event+" data:"+data);
+                switch (event) {
+                    case "resize":
+                        var doc = window.sideview.mainwindow().document;
+                    var body = doc.getElementById("sideviewContent")
+                    if(data==="shrink"){
+                        body.setAttribute("width",window.sideview.min_width)
+                    }else{
+                        body.setAttribute("width",window.sideview.max_width)
+                    }
+                    break;
+                    default:
+                        window.sideview.log("event not found:"+name)
+                    break;
+                }
+            }catch(error){window.sideview.log("pluginCallback:"+e)}
         };
     };
     if (typeof(window.sideview) === 'undefined') {
