@@ -39,6 +39,7 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
             this.sandbox = null;
             doc.getElementById('messengerBox').appendChild(v) 
         };
+
         this.setSandbox = function(){
             try{
                 if(window.sideview.sandbox) {return true }
@@ -53,21 +54,20 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
                 }
             }catch(e){alert("setSandbox"+e)}
         };
+
         this.onLoad = function(e){
             try{
                 var main = window.sideview.mainwindow()
                 var appcontent = main.document.getElementById("tabmail-container");
                 var tree = document.getElementById('threadTree');
-
                 tree.addEventListener('select', function(e){
                     window.sideview.onEmailSelect();
                 }, true);
                 window.sideview.setSandbox()
-
                 window.sideview.onEmailSelect();
             }catch(e){window.sideview.log("onload"+e)}
-
         };
+
         this.log = function(message, state) {
             var con = Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService);
             con.logStringMessage(message);
@@ -106,21 +106,20 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
                     }
                 }
             }
-            if (contacts.length > 0) {
-                window.sideview.sendContacts(contacts);
-            }
+            if (contacts.length > 0) { window.sideview.sendContacts(contacts); }
         };
+
         this.sendContacts = function(contacts){
             try{
                 window.sideview.setSandbox();
                 if(window.sideview.sandbox){
                     var json = JSON.stringify(contacts);
                     var s="(function() {window.wrappedJSObject.Contacts.selected_email("+json+")})();"
-                    //s="(function() { window.wrappedJSObject.alert(window.Contacts)})()"
                     return Components.utils.evalInSandbox(s,window.sideview.sandbox);
                 }
             }catch(e){alert(e); window.sideview.log("sendcontacts:"+e)} 
         };
+
         this.pluginCallback = function(e){
             try{
                 var event = $(e.target).find("#eventname").text();
@@ -136,6 +135,12 @@ Components.classes["@mozilla.org/moz/jssubscript-loader;1"].getService(
                         body.setAttribute("width",window.sideview.max_width)
                     }
                     break;
+                    case "open_url":
+                    var messenger = Components.classes["@mozilla.org/messenger;1"].createInstance();
+                    messenger = messenger.QueryInterface(Components.interfaces.nsIMessenger);
+                    messenger.launchExternalURL(data);
+
+
                     default:
                         window.sideview.log("event not found:"+name)
                     break;

@@ -24,7 +24,8 @@ a:active {color:black;}  /* selected link */
 .title{
     height:18px;
     width: 100%;
-    background-color: blue;
+    background-image: -moz-linear-gradient(top, transparent, black);
+    background-image: -webkit-gradient(linear,left top,right top,color-stop(1, rgba(255,255,255,1)),color-stop(0, rgba(255,255,255,0)));
 }
 .shrink,.expand{
     color: black;
