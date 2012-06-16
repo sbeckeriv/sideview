@@ -58,3 +58,16 @@ callPlugin = function(event,data){
     child.dispatchEvent(ev);
 }
 
+send_external = function(event){
+ event.preventDefault();
+  var link = jQuery(this);
+  if(link.attr("target")==="_blank"){
+    callPlugin("open_url",link.attr("href"));
+    return false;
+  }
+  return true;
+}
+
+$(document).ready(function(){
+  $("a").live("click",send_external)
+})
