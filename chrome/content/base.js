@@ -59,9 +59,9 @@ callPlugin = function(event,data){
 }
 
 send_external = function(event){
- event.preventDefault();
   var link = jQuery(this);
   if(link.attr("target")==="_blank"){
+    event.preventDefault();
     callPlugin("open_url",link.attr("href"));
     return false;
   }
